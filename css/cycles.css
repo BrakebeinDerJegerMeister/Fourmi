@@ -1,0 +1,298 @@
+.modalclose {
+    background-color: white;
+    background-image: url("../img/crossgrey.png");
+}
+.modalclose:hover {
+    background-image: url("../img/crossred.png");
+}
+#couleurs-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#couleurs-panel {
+    z-index: 1;  
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgba(255,255,255,0.5);
+    border: 0.15em solid white;
+    border-left: none;
+    border-radius: 0 1em 1em 0 / 0 1em 1em 0;
+}
+.rule div {
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    margin: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rule svg {
+    width: 80%;
+    height: 80%;
+}
+.rule .reverse {
+   transform: scaleX(-1); 
+}
+#fleche-gauche path {
+    stroke: white;
+    stroke-width: 10;
+}
+
+
+
+.modalbox1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255,255,255,0.65);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: wheat;
+}
+.modalbox1[hidden] {
+    display: none;
+}
+.modalbox1>div {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 90%;
+    border: 0.5em solid white;
+    background-color: rgba(55,55,55,1);
+    border-radius: 1em;
+}
+
+
+#cyclesPanel {
+    padding: 0.5em;
+    min-height: 2em;
+    min-width: 2em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+#cycleToEdit {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#cycleEditorPanel {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+#cycleEditor .rule {
+    border-style: solid;
+    border-width: 0.15em;
+    border-color: transparent;
+}
+#cycleEditor .rule:hover {
+    background-color: gray;
+}
+#cycleEditor .rule[selected] {
+    border-color: white;
+}
+
+#cyclesPanel,
+#cycleToEdit {
+    margin: 1em 0;
+}
+
+/*******************************************************************************
+ *
+ *                               Controles
+ *
+ ******************************************************************************/
+
+#cycleControls,
+#ruleControls {
+    margin: 1em;
+}
+
+#cycleControls ul,
+#ruleControls ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    justify-content: center;
+    padding: 0;
+}
+
+#cycleControls .btnAction,
+#ruleControls .btnAction {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    height: 1.5em;
+    width: 1.5em;
+    padding: 0.5em;
+    align-items: center;
+    justify-content: center;
+    border: solid 0.15em white;
+    border-radius: 25%;
+    transition: all 0.25s;
+}
+#cycleControls .btnAction:not(.disabled),
+#ruleControls .btnAction:not(.disabled) {
+    box-shadow: 0.1em 0.1em 0.5em 0em gray;
+}
+#cycleControls .btnAction:hover:not(.disabled),
+#ruleControls .btnAction:hover:not(.disabled) {
+    background-color: white;
+}
+#cycleControls .btnAction:hover:not(.disabled) img,
+#ruleControls .btnAction:hover:not(.disabled) img {
+    filter: invert(0);
+}
+#cycleControls .btnAction.disabled,
+#ruleControls .btnAction.disabled {
+    filter: opacity(20%);
+    pointer-events: none;
+}
+
+#cycleControls .btnAction img,
+#ruleControls .btnAction img {
+    height:100%;
+    width: 100%;
+    filter: invert(1);
+    pointer-events: none;
+}
+#cycleControls .btnAction span,
+#ruleControls .btnAction span {
+    font-size: 0.7em;
+    text-align: center;
+    visibility: hidden;
+    display: none;
+}
+
+/*******************************************************************************
+ *
+ *            Définition d'un cycle standard dans les éditeurs
+ *
+ ******************************************************************************/
+#cyclesPanel .cycle,
+#cycleEditorPanel .cycle
+{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 1em;
+    box-sizing: content-box;
+    align-items: center;
+}
+/*******************************************************************************
+ *
+ *  Comportement d'un cycle dans le panneau réservés à l'affichage des cycles
+ *
+ ******************************************************************************/
+#cycleEditorPanel .namedCycle .cycleName {
+    display: none;
+}
+#cyclesPanel .namedCycle,
+#cyclesPanel .cycle {
+    border-style: solid;
+    border-width: 0.15em;
+    border-color: transparent;
+}
+#cyclesPanel .namedCycle:hover,
+#cyclesPanel .cycle:hover {
+    background-color: rgba(127,127,127,0.3);
+    border-color : white;
+}
+#cyclesPanel .namedCycle[selected],
+#cyclesPanel .cycle[selected] {
+    background-color: rgba(127,127,127,0.6);
+}
+#cyclesPanel .namedCycle *,
+#cyclesPanel .cycle * {
+    pointer-events: none;
+}
+/******************************************************************************/
+
+
+
+
+
+.modalbox1>div {
+    position: relative;
+}
+.modaltitle {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5em;
+}
+.modalclose {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+}
+
+.rule > *,
+.btn span,
+#cycleEditor span,
+#cyclesManager span,
+.modalclose span {
+    pointer-events: none;
+}
+.modalclose>div:hover {
+    background-color: white;
+    color: black;
+}
+
+/*******************************************************************************
+ *
+ *                      Comportement des boutons
+ *
+ ******************************************************************************/
+
+
+.modalcontrols {
+    display: flex;
+    justify-content: center;
+}
+.modalcontrols>div {
+    min-height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    border: 0.0625em solid white;
+}
+.modalcontrols>div span{
+    padding : 0.5em 2em;
+}
+.modalcontrols>div.disabled {
+    border-color: grey;
+    color: grey;
+}
+
+.modalcontrols>div.enabled:hover{
+    background-color: white;
+    color: black;
+}
+.modalcontrols>div span::selection {
+    color: inherit;
+    background-color: inherit;
+}
+
+
+

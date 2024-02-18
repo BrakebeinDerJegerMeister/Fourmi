@@ -1,0 +1,77 @@
+
+
+#controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0.5em auto;
+    color: wheat;
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+    justify-content: center;
+    align-items: center;
+}
+#controls>* {
+    margin: 0.25em 0;
+}
+
+#predefspeed span,
+.btncontrol span {
+    pointer-events: none;
+}
+
+
+#predefspeed, 
+#controlbtns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#controlbtns input+label {
+    min-width: 5em;
+    padding: 0.5em 1em;
+    margin: 0 1em;
+    border: 0.05em solid lightblue;
+}
+#predefspeed input+label {
+    min-width: 4em;
+    padding: 0.1em 0.25em;
+    margin: 0 1em;
+    font-size: 0.8em;
+    border: 0.05em solid wheat;
+}
+
+#predefspeed input+label,
+#controlbtns input+label {
+    text-align: center;
+    display: block;
+    border-radius: 0.5em;
+    background-color: black;
+    cursor: pointer;
+    transition: 0.2s all linear;
+}
+#predefspeed input+label:hover, 
+#controlbtns input+label:hover {
+    color: black;
+    background-color: wheat; 
+}
+#controlbtns input,
+#predefspeed input {
+    display: none;
+}
+#predefspeed input:checked+label,
+#controlbtns input:checked+label {
+    color: black;
+    background-color: wheat;
+}
+#predefspeed input+label span,
+#controlbtns input+label span {
+    pointer-events: none;
+}
+#predefspeed input+label>span::selection,
+#controlbtns input+label>span::selection {
+    color: inherit;
+    background-color: inherit;
+}

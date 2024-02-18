@@ -1,0 +1,13 @@
+#menuBurger {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#menuItems {
+    color: white;
+    background-color: black;
+    position: absolute;
+    right: 0;
+    top: 0;
+}

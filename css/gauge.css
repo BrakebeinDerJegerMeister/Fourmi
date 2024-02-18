@@ -1,0 +1,134 @@
+#gauge {
+    /*border-radius: 50%;
+    background-color: red;
+    border: 0.1em solid darkred;*/
+    fill-opacity: 1;
+    fill-rule:nonzero;
+    stroke:none;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+
+
+
+
+#gauge[data-phase="complete"][data-mode="idle"] {
+    fill: darkblue;
+    animation: 5s steps(8) infinite isrunning;
+}
+#gauge[data-phase="complete"][data-mode="idle"] #gp0 { fill: deepskyblue; }
+
+
+#gauge[data-phase="create"] { fill: orange; }
+#gauge[data-phase="create"] [data-confirm="ok"] { fill: lime; }
+#gauge[data-phase="create"] [data-confirm="bad"] { fill: red; }
+
+#gauge[type="loading"] {
+    fill: red;
+}
+
+
+#gauge[data-phase="complete"][data-mode="running"] {
+    fill: lime;
+    animation: 1s steps(8) infinite isrunning;
+}
+#gauge[data-phase="complete"][data-mode="running"]  #gpc { fill: transparent; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp0 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp7 { fill-opacity: 0.85; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp6 { fill-opacity: 0.7; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp5 { fill-opacity: 0.55; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp4 { fill-opacity: 0.4; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp3 { fill-opacity: 0.35; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp2 { fill-opacity: 0.2; }
+#gauge[data-phase="complete"][data-mode="running"]  #gp1 { fill-opacity: 0.05; }
+
+@keyframes isrunning {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes blink {
+    from {
+        visibility: hidden;
+    }
+    to {
+        visibility: visible;
+    }
+}
+
+#gauge[data-high="error"] .g-center {
+    fill: red;
+    animation: 2s steps(2) reverse infinite blink;
+}
+#gauge[data-high="error"] .g-around {
+    fill: red;
+    animation: 2s steps(2) infinite blink;
+}
+
+
+#gauge[data-phase="complete"][data-mode="paused"]  .g-center {
+    fill: lime;
+    animation: 2s steps(2) reverse infinite blink;
+}
+
+#gauge[data-phase="complete"][data-mode="paused"]  .g-around {
+    fill: lime;
+    animation: 2s steps(2) infinite blink;
+}
+
+#gauge[type="warning"] .g-center {
+    fill: orange;
+    animation: 2s steps(2) reverse infinite blink;
+}
+#gauge[type="warning"] .g-around {
+    fill: orange;
+    animation: 2s steps(2) infinite blink;
+}
+
+
+/* 
+ * =============================== Zooming ================================
+ */
+#gauge[data-phase="complete"][data-aspect="zooming"] {
+    fill: #400040;
+    animation-play-state: paused;
+    fill-opacity: 1;
+    transform: rotate(0deg);
+}
+#gauge[data-phase="complete"][data-aspect="zooming"] #gpc { fill: transparent; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp0 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp1 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp2 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp3 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp4 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp5 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp6 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="zooming"] #gp7 { fill: fuchsia; fill-opacity: 1; }
+
+
+
+
+/* 
+ * ================================ Moving ================================
+ */
+#gauge[data-phase="complete"][data-aspect="moving"] {
+    fill: #400040;
+    animation-play-state: paused;
+    fill-opacity: 1;
+    transform: rotate(0deg);
+}
+#gauge[data-phase="complete"][data-aspect="moving"] #gpc { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp0 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp1 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp2 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp3 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp4 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp5 { fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp6 { fill: fuchsia; fill-opacity: 1; }
+#gauge[data-phase="complete"][data-aspect="moving"] #gp7 { fill-opacity: 1; }

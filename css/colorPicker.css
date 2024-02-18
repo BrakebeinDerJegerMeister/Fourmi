@@ -1,0 +1,70 @@
+
+#colorPickerSystem {
+    position: relative;
+    display: flex;
+}
+#colorPickerSystem.disabled {
+    filter: grayscale(100%) opacity(10%);
+    pointer-events: none;
+}
+#colorPickerSystem.disabled .colorPickerCircle,
+#colorPickerSystem.disabled .colorPickerTri {
+    fill: gray;
+}
+#colorPickerSystem.disabled #circleSelector,
+#colorPickerSystem.disabled #triangleSelector {
+    fill: none;
+    stroke: none;
+}
+#colorPicker {
+    width: 20em;
+    height: 20em;
+}
+
+#svgCanvas {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+#circleSelector,
+#triangleSelector,
+/*#circlesGroup circle*/
+#trianglesGroup path {
+    stroke-width: 5;
+}
+
+#trianglesGroup .selected
+/*#circlesGroup .selected*/ {
+    stroke: white;
+    
+}
+
+#selectedColor {
+    height: 5ex;
+    width: 3em;
+}
+
+
+
+
+#colorPickerControls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#colorPickerControls ul {
+    padding: 0;
+}
+#colorPickerControls li {
+    list-style: none;
+}
+#colorPickerControls li.disabled {
+    pointer-events: none;
+    color: black;
+}
+#colorPickerControls li.disabled img {
+    filter: grayscale(100%) opacity(10%);
+}
+#colorPickerControls img {
+    pointer-events: none;
+}

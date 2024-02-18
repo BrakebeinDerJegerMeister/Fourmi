@@ -1,0 +1,58 @@
+:root {
+    --nbColonnes: 3;
+}
+* {
+    margin: 0;
+}
+body {
+    font-family: sans-serif;
+}
+#fourmi {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#fourmi canvas {
+    /*
+    height: 100%;
+    width: 100%;
+    */
+}
+
+#infos {
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0.5em auto;
+    display: flex;
+    color: wheat;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 0.1em solid wheat;
+    border-radius: 0.5em;
+    padding: 0.25em 0.5em;
+    width: 15em;
+}
+#status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 0.5em;
+}
+
+#rates {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#rates div {
+     font-size: 0.8em;
+}
+
+

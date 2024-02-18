@@ -1,0 +1,28 @@
+.fourmi {
+    position: absolute;
+    background-size: contain;
+    background-position: center;
+    background-image: url("../img/fourmi.png");
+    border: 1px solid yellow;
+    box-sizing: content-box;
+}
+
+/* vers le haut */
+.fourmi[data-orientation="0,1,0,-1"] {
+    transform: rotate(0deg);
+}
+
+/* vers la droite */
+.fourmi[data-orientation="1,0,-1,0"] {
+    transform: rotate(90deg);
+}
+
+/* vers le bas */
+.fourmi[data-orientation="0,-1,0,1"] {
+    transform: rotate(180deg);
+}
+
+/* vers la gauche */
+.fourmi[data-orientation="-1,0,1,0"] {
+    transform: rotate(270deg);
+}

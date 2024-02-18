@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Fourmi v2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/menu.css">
+        <link rel="stylesheet" type="text/css" href="./css/index.css">
+        <link rel="stylesheet" type="text/css" href="./css/gauge.css">
+        <link rel="stylesheet" type="text/css" href="./css/fourmi.css">
+        <link rel="stylesheet" type="text/css" href="./css/cycles.css">
+        <link rel="stylesheet" type="text/css" href="./css/controls.css">
+        <link rel="stylesheet" type="text/css" href="./css/colorPicker.css">
+        <link rel="stylesheet" type="text/css" href="./css/popups.css">
+        <link rel="icon" type="image/x-icon" href="./img/favicon.png">
+        <script src="./js/utils.js" defer></script>
+        <script src="./js/undoredo.js" defer></script>
+        <script src="./js/colorManager.js" defer></script>
+        <script src="./js/colorPicker.js" defer></script>
+        <script src="./js/bbClock.js" defer></script>
+        <script src="./js/fourmiCore.js" defer></script>
+        <script src="./js/cycles.js" defer></script>
+        <script src="./js/cycleEditor.js" defer></script>
+        <script src="./js/cyclesManager.js" defer></script>
+        <script src="./js/cycleBuilder.js" defer></script>
+        <script src="./js/fourmiFacade.js" defer></script>
+        <script src="./js/interface.js" defer></script>
+    </head>
+
+    <body>
+        <svg style="display:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+    <symbol id="fleche-gauche" viewBox="0 0 420 470">
+        <path d="M 150,90.36218 150,0.36218 0,140.36218 150,280.36218 150,190.36218 250,190.36218 250,470.3622 350,470.3622 350,90.36218 z"/>
+    </symbol>
+    <symbol id="loader-petitcercle" viewBox="0 0 1000 1000">
+        <path
+            d="M 374.99999,124.99997 C 374.99999,55.964384 430.9644,-2.6e-5 499.99999,-2.6e-5 569.03559,-2.6e-5 624.99999,55.964384 624.99999,124.99997 624.99999,194.03556 569.03559,249.99998 499.99999,249.99998 430.9644,249.99998 374.99999,194.03556 374.99999,124.99997 z"
+            />
+    </symbol>
+    <symbol id="loader-grandcercle" viewBox="0 0 1000 1000">
+        <path
+            d="M 725,500 C 725,624.26406 624.26406,725 500,725 375.73594,725 275,624.26406 275,500 275,375.73594 375.73594,275 500,275 624.26406,275 725,375.73594 725,500 z"
+            />
+    </symbol>
+    </defs>
+    </svg>
+
+    <div id="fourmi"></div>
+
+    <div id="couleurs-container">
+        <div id="couleurs-panel">
+            <div id="couleurs-list">
+            </div>
+            <div id="couleurs-controls">
+                <div id="cycle-picker"><span>?</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menuBurger">
+        <div><img src="img/burger2.png" alt="menu"/></div>
+        <ul id = "menuItems" hidden>
+            <li><span>Options de démarrage</span></li>
+            <li><span>Gestion des règles</span></li>
+            <li><span>Contrôles</span></li>
+        </ul>
+
+    </div>
+
+    <template id="yesnopopupTemplate">
+        <div class="popup-main">
+            <div class="popup-bg"></div>
+            <div class="popup-body">
+                <div class="popup-title-body"><span data-for="title"></span></div>
+                <div class="popup-text-body"><span data-for="text"></span></div>
+                <div class="popup-btns">
+                    <div data-useas="no" class="popup-btn"><span data-for="noTxt"></span></div>
+                    <div data-useas="yes" class="popup-btn popup-default-btn"><span data-for="yesTxt"></span></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="simpleinputTemplate">
+        <div class="popup-main">
+            <div class="popup-bg"></div>
+            <div class="popup-body">
+                <div class="popup-title-body"><span data-for="title"></span></div>
+                <div class="popup-text-body">
+                    <input type="text" class="popup-input"/>
+                </div>
+                <div class="popup-btns">
+                    <div data-useas="cancel" class="popup-btn"><span data-for="cancelTxt"></span></div>
+                    <div data-useas="validate" class="popup-btn popup-default-btn"><span data-for="validateTxt"></span></div>
+                </div>
+            </div>
+        </div>
+    </template> 
+
+    <template id="namedCycleTemplate">
+        <div draggable="true" class="namedCycle">
+            <div class="cycleName"><span></span></div>
+        </div>
+    </template>
+
+    <template id="cycleTemplate">
+        <div class="cycle"></div>
+    </template>
+
+    <template id="ruleTemplate">
+        <div draggable="true" class="rule">
+            <div class="couleur">
+                <svg>
+                <use xlink:href="#fleche-gauche"></use>
+                </svg>
+            </div>
+        </div>
+    </template>
+
+    <template id="colorPickerTemplate">
+        <div id="colorPickerSystem">
+            <div id="colorPicker">
+                <svg xmlns="http://www.w3.org/2000/svg" id="svgCanvas">
+                <rect id="colorPickerArea" x="0" y="0" width="100%" height="100%"></rect>
+                <g id="circlesGroup">
+                <circle id="circlesArea" cx="0" cy="0" r="50%"></circle>
+                <circle id="circleSelector" cx="0" cy="0" r="0"></circle>
+                </g>
+                <g id="trianglesGroup">
+                <path id="triangleSelector" d=""></path>
+                </g>
+                <line id="vpline" x1="-10" y1="0" x2="-10" y2="100%" stroke="yellow" stroke-width="2"/>
+                <line id="hpline" x1="0" y1="-10" x2="100%" y2="-10" stroke="yellow" stroke-width="2"/>
+                </svg>
+                <!--<div id="colorPickerAreaForPointer" style="position: absolute; width: 100%; height: 100%; top : 0; left : 0"></div>-->
+            </div>  
+            <div id="colorPickerControls">
+                <div id="selectedColor"></div>
+                <ul>
+                    <li id="colorAccept" class="disabled"><img src="./img/okay36.png" alt="alt"/></li>
+                    <li id="colorDont" class="disabled"><img src="./img/critical36.png" alt="alt"/></li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <div id="cyclesManager" hidden class="modalbox1">
+        <div>
+            <div id="cycleRenamer" hidden class="minimodalbox">
+                <div>
+                    <div>Renommer</div>
+                    <input id="cycleNameInput" type="text"/>
+                </div>
+            </div>
+            <div class="modaltitle">
+                <div><span>Gestionnaire de cycles</span></div>
+            </div>
+            <div id="closeCyclesManager" class="modalclose mainBtn"></div>
+            <div id ="cycleControls">
+                <ul>
+                    <li id="undoEditCycles" class="btnAction">
+                        <img src="./img/undo.png" alt="Défaire"/>
+                        <span>Défaire</span>                            
+                    </li>
+                    <li id="redoEditCycles" class="btnAction">
+                        <img src="./img/redo.png" alt="Refaire"/>
+                        <span>Refaire</span>                            
+                    </li>
+                    <li id="addCycle" class="btnAction">
+                        <img src="./img/plus.png" alt="Ajouter"/>
+                        <span>Ajouter</span>                            
+                    </li>
+                    <li id="delCycle" class="btnAction">
+                        <img src="./img/edit_remove.png" alt="Supprimer"/>
+                        <span>Supprimer</span>                            
+                    </li>               
+                    <li id="editCycle" class="btnAction">
+                        <img src="./img/color_line.png" alt="Editer"/>
+                        <span>Editer</span>                            
+                    </li>
+                    <li id="renameCycle" class="btnAction">
+                        <img src="./img/cell_edit.png" alt="Renommer"/>
+                        <span>Renommer</span>                            
+                    </li>  
+                    <li id="moveCycleUp" class="btnAction">
+                        <img src="./img/tab_up.png" alt="Monter"/>
+                        <span>Monter</span>                            
+                    </li>
+                    <li id="moveCycleDown" class="btnAction">
+                        <img src="./img/tab_down.png" alt="Descendre"/>
+                        <span>Descendre</span>                            
+                    </li>
+                    <li id="CycleToText" class="btnAction">
+                        <img src="./img/text_block.png" alt="Voir en texte"/>
+                        <span>Voir en texte</span>                            
+                    </li>
+                    <li id="CyclesToText" class="btnAction">
+                        <img src="./img/text_all.png" alt="Tout voir en texte"/>
+                        <span>Voir tout en texte</span> 
+                    </li>
+                    <li id="useCycle" class="btnAction">
+                        <img src="./img/use.png" alt="Utiliser"/>
+                        <span>Utiliser</span>                            
+                    </li>
+                </ul>
+            </div>
+            <div id="cyclesPanel"></div>
+            <div id="cycles-editor-controls" class="modalcontrols">
+                <div id="quit-cyclesedit" class="mainBtn"><span>Quitter</span></div>
+                <div id="save-cyclesedit" class="mainBtn"><span>Enregistrer</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cycleEditor" hidden class="modalbox1">
+        <div>
+            <div class="modaltitle">
+                <div><span>Edition du cycle</span><span id="cycleName"></span></div>
+            </div>
+            <div id="closeCycleEditor" class="modalclose mainBtn"></div>
+            <div id ="ruleControls">
+                <ul>
+                    <li id="undoEdit" class="btnAction">
+                        <img src="./img/undo.png" alt="Défaire"/>
+                        <span>Défaire</span>                            
+                    </li>
+                    <li id="redoEdit" class="btnAction">
+                        <img src="./img/redo.png" alt="Refaire"/>
+                        <span>Refaire</span>                            
+                    </li>
+                    <li id="addRule" class="btnAction">
+                        <img src="./img/plus.png" alt="Ajouter"/>
+                        <span>Ajouter</span>                            
+                    </li>
+                    <li id="delRule" class="btnAction">
+                        <img src="./img/edit_remove.png" alt="Supprimer"/>
+                        <span>Supprimer</span>                            
+                    </li>
+                    <li id="invertRule" class="btnAction">
+                        <img src="./img/arrowheads.png" alt="Inverser"/>
+                        <span>Inverser</span>                            
+                    </li>
+                    <li id="leftShiftRule" class="btnAction">
+                        <img src="./img/tab_left.png" alt="Décaler à gauche"/>
+                        <span>Décaler à gauche</span>                            
+                    </li>
+                    <li id="rightShiftRule" class="btnAction">
+                        <img src="./img/tab_right.png" alt="Décaler à droite"/>
+                        <span>Décaler à droite</span>                            
+                    </li>
+                    <li id="ruleToText" class="btnAction">
+                        <img src="./img/text_block.png" alt="Voir en texte"/>
+                        <span>Voir en texte</span>                            
+                    </li>
+                    <li id="RulesToText" class="btnAction">
+                        <img src="./img/text_all.png" alt="Tout voir en texte"/>
+                        <span>Voir tout en texte</span> 
+                    </li>
+                </ul>
+            </div>
+            <div id="cycleToEdit">
+                <div id="cycleEditorPanel"></div>
+            </div>
+
+            <div id="colorPickerHolder"></div>
+
+            <div id="cycle-editor-controls" class="modalcontrols">
+                <div id="cancel-edit" class="mainBtn"><span>Annuler</span></div>
+                <div id="accept-edit" class="mainBtn"><span>Accepter</span></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <div id="controls">
+        <div id="predefspeed">
+            <input type="radio" name="speed" id="speed1" data-frequency="1" data-interval="1000">
+            <label for="speed1"><span>1</span>
+            </label>
+            <input type="radio" name="speed" id="speed2" data-frequency="1" data-interval="50">
+            <label for="speed2"><span>20</span>
+            </label>
+            <input type="radio" name="speed" id="speed3" data-frequency="5" data-interval="50">
+            <label for="speed3"><span>100</span>
+            </label>
+            <input type="radio" name="speed" id="speed4" data-frequency="50" data-interval="10">
+            <label for="speed4"><span>5000</span>
+            </label>
+            <input type="radio" name="speed" id="speed5" data-frequency="300" data-interval="10">
+            <label for="speed5"><span>30000</span>
+            </label>
+            <input type="radio" name="speed" id="speed6" data-frequency="2000" data-interval="10">
+            <label for="speed6"><span>200000</span>
+            </label>
+        </div>
+        <div id="controlbtns">
+            <input type="radio" name="control" id="autobackwardbtn" class="btncontrol">
+            <label for="autobackwardbtn"><span>Auto -</span>
+            </label>
+            <input type="radio" name="control" id="stepbackwardbtn" class="btncontrol">
+            <label for="stepbackwardbtn"><span>Step -</span>
+            </label>
+            <input type="radio" name="control" id="stopbtn" class="btncontrol">
+            <label for="stopbtn"><span>Stop</span>
+            </label>
+            <input type="radio" name="control" id="stepforwardbtn" class="btncontrol">
+            <label for="stepforwardbtn"><span>Step +</span>
+            </label>
+            <input type="radio" name="control" id="autoforwardbtn" class="btncontrol">
+            <label for="autoforwardbtn"><span>Auto +</span>
+            </label>
+        </div>
+    </div>
+
+    <div id="options"></div>
+
+    <div id="infos">
+        <div id="status"><svg id="gauge" viewbox="0 0 1000 1000">
+            <use id="gpc" class="g-center" href="#loader-grandcercle"></use>
+            <g id="garound">
+            <use id="gp0" class="g-around" href="#loader-petitcercle"></use>
+            <use id="gp1" class="g-around" href="#loader-petitcercle" transform="rotate(45 500 500)"></use>
+            <use id="gp2" class="g-around" href="#loader-petitcercle" transform="rotate(90 500 500)"></use>
+            <use id="gp3" class="g-around" href="#loader-petitcercle" transform="rotate(135 500 500)"></use>
+            <use id="gp4" class="g-around" href="#loader-petitcercle" transform="rotate(180 500 500)"></use>
+            <use id="gp5" class="g-around" href="#loader-petitcercle" transform="rotate(225 500 500)"></use>
+            <use id="gp6" class="g-around" href="#loader-petitcercle" transform="rotate(270 500 500)"></use>
+            <use id="gp7" class="g-around" href="#loader-petitcercle" transform="rotate(315 500 500)"></use>
+            </g>
+            </svg></div>
+        <div id="rates">
+            <div><span>FPS : </span><span id="fps">0</span><span> - BFS : </span><span id="bfs">0</span></div>
+            <div><span>PPS : </span><span id="pps">0</span><span> - Usage : </span><span id="usage">0 %</span></div>
+            <div><span>OPS : </span><span id="ops">0</span></div>
+        </div>
+    </div>
+    <div id="vline"></div>
+    <div id="hline"></div>       
+</body>
+</html>
